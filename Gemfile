@@ -25,6 +25,8 @@ gem 'bcrypt', '~> 3.1.7'
 
 # devise
 gem 'devise'
+#cancancan
+gem 'cancancan'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
