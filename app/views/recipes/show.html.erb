@@ -1,4 +1,74 @@
-<p id="notice"><%= notice %></p>
+<div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-10 col-lg-9 col-xl-8">
+        <div class="card shadow-2-strong " style="border-radius: 1rem;">
+          <div class="card-body p-2 text-center">
+            <h1><%= @recipe.name %></h1>
 
-<%= link_to 'Edit', edit_recipe_path(@recipe) %> |
-<%= link_to 'Back', recipes_path %>
+            <div class="d-flex flex-column">
+
+              <div class="row">
+                <div class="col-md-6">
+                  <p>Preparation time: <%= @recipe.preparation_time %></p>
+                  <p>Cooking time: <%= @recipe.cooking_time %></p>
+                  <div><%= @recipe.description %></div>
+                </div>
+
+                <div class="col-md-6">
+                  <% if can? :update, @recipe %>
+                  <%= form_with model: @recipe, url: user_recipe_path(@recipe), method: :patch, local: true do |form| %>
+                    <div class="custom-control custom-switch">
+                    <%= form.check_box :public, class: "custom-control-input", id: "customSwitch1" %>
+                      <label class="custom-control-label" for="customSwitch1">Public</label>
+                    </div>
+                    <div class="actions btn btn-">
+                         <%= form.submit "Submit status" %>
+                    </div>
+                   <% end %>
+                  <% end %>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 my-5">
+                  <button type="button" class="btn btn-primary btn-lg" id="shop">Generate Shopping list</button>
+                </div>
+                <div class="col-md-6 my-5">
+                  <% if can? :update, @recipe %> 
+                    <%= link_to "Add Food", new_user_recipe_recipe_food_path(current_user, @recipe), class: "btn btn-primary btn-lg"%>
+                  <% end %>
+                </div>
+              </div>     
+              <div class="border-top border-secondary">
+              </div>
+              <br/>
+              <table class="table table-striped table-hover table-bordered align-middle table-sm my-5">     
+              <thead class="table-dark">
+
+                  <th scope="col">Foods</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Value</th>
+                  <th scope="col">Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+
+                <% @recipe_foods.each do |recipe_food| %>
+                  <tr>
+                    <td><%= recipe_food.food.name %></td>
+                    <td><%= recipe_food.quantity %><%= recipe_food.food.measurement_unit %></td>
+                    <td><%= number_to_currency((recipe_food.food.price).to_i * (recipe_food.quantity).to_i)%></td>
+                    <td class="d-flex justify-content-center">
+                        <%= button_to "Delete", user_recipe_recipe_food_path(current_user, @recipe, recipe_food), method: :delete, data: { confirm: 'Are you sure?' }, class: "r-food-btn btn btn-danger" %>
+                        <%= link_to "Edit", edit_user_recipe_recipe_food_path(current_user, @recipe, recipe_food), class: "btn btn-primary mx-2 r-food-btn" %>
+                    </td>
+                  </tr>
+                  <% end %>
+              </tbody>
+          </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
