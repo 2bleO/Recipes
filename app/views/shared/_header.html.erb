@@ -6,8 +6,7 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li><%= link_to "Home (Users)", home_path %></li>
-      <%= link_to "New post", user_posts_path(1)+'/new', class: "ms-2" %>
+      <li><%= link_to "Home (Foods)", home_path %></li>
       <% if user_signed_in? %>
         <li class = "nav-list ms-2">
           <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
