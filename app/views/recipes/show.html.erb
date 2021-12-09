@@ -30,7 +30,7 @@
               </div>
               <div class="row">
                 <div class="col-md-6 my-5">
-                  <button type="button" class="btn btn-primary btn-lg" id="shop">Generate Shopping list</button>
+                <%= link_to 'shopping list', user_shopping_lists_path(id: @recipe), class: "btn btn-primary" %>
                 </div>
                 <div class="col-md-6 my-5">
                   <% if can? :update, @recipe %> 

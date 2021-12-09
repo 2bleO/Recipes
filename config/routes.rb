@@ -3,11 +3,11 @@ Rails.application.routes.draw do
   root 'foods#index', as: 'home'
   resources :users, only: %i[index show] do 
     resources :foods
-    resources :inventories
-    resources :shopping_list
+    resources :shopping_lists, only: %i[index show]
     resources :recipe_foods
     resources :recipes do
       resources :recipe_foods
     end
   end
+  get 'public_recipes', to: 'recipes#public_recipes'
 end
