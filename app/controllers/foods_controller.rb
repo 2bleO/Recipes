@@ -1,29 +1,37 @@
 class FoodsController < ApplicationController
+  load_and_authorize_resource
+
   def index
-    @foods = Food.all
+    @user = current_user
+    @foods = current_user.foods.all
+  end
+
+  def show
+    @food = Food.find(params[:id])
+  end
+
+  def new
+    @food = current_user.foods.new
   end
 
   def create
-    @food = current_user.foods.build(food_params)
+    @food = current_user.foods.create(food_params)
     if @food.save
-      flash[:notice] = 'Food successfully added!'
-      redirect_to foods_path
+      redirect_to user_foods_path
     else
-      render :index
+      render :new
     end
   end
 
   def destroy
-    @food = Food.find(params[:id])
-    authorize! :destroy, @food
+    @food = current_user.foods.find(params[:id])
     @food.destroy
-    flash[:notice] = 'Food susseccfully deleted!'
-    redirect_back(fallback_location: root_path)
+    redirect_to user_foods_path
   end
 
   private
 
   def food_params
-    params.require(:food).permit(:name, :measurmnet_units, :price)
+    params.require(:food).permit(:name, :measurement_unit, :price)
   end
 end
