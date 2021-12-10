@@ -1,8 +1,13 @@
 Rails.application.routes.draw do
   devise_for :users
-  root 'foods#index'
-  resources :recipe_foods
-  resources :foods, only: %i[index create destroy]
-  resources :recipes, only: %i[index show create destroy]
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  root 'foods#index', as: 'home'
+  resources :users, only: %i[index show] do
+    resources :foods
+    resources :shopping_lists, only: %i[index show]
+    resources :recipe_foods
+    resources :recipes do
+      resources :recipe_foods
+    end
+  end
+  get 'public_recipes', to: 'recipes#public_recipes'
 end
