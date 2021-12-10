@@ -1,7 +1,10 @@
-<div><%= link_to new_user_food_path(@user.id) do%>
-  <button>Add Food</button>
-<% end %></div>
-<table>     
+<div class="foods d-flex mx-auto p-5 w-75 flex-column align-items-center">
+    <div class=" align-self-end">
+        <%= link_to new_user_food_path(@user.id) do%>
+            <button class="btn btn-primary">Add Food</button>
+        <% end %>
+    </div>
+<table class="table table-striped table-hover table-bordered align-middle table-sm my-5">     
         <thead class="table-dark">
 
             <th scope="col">Foods</th>
@@ -26,4 +29,4 @@
             <% end %>
         </tbody>
     </table>
-</section>
+</div>
