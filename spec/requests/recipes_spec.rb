@@ -8,19 +8,15 @@ RSpec.describe 'Recipes', type: :request do
   describe 'GET /index' do
     before do
       sign_in user
-      get recipes_path
+      get user_recipes_path(user.id)
     end
 
     it 'returns http ok' do
       expect(response).to have_http_status(:ok)
     end
 
-    it "renders 'index' template" do
-      expect(response).to render_template('index')
-    end
-
     it 'should include correct placeholder' do
-      expect(response.body).to include('Find me in app/views/recipes/index.html.erb')
+      expect(response.body).to include('Create a new Recipe')
     end
   end
 end
