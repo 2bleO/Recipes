@@ -1,0 +1,29 @@
+<div class="container d-flex flex-column align-items-center p-4">
+
+<h1  class="text-secondary align-center mb-3">Shopping list</h1>
+  <div class="d-flex justify-content-between container w-75">
+    <p class="h5 text-secondary">Amount of food to buy: <%= @recipe.recipe_foods.size%></p>
+    <p class="h5 text-secondary">Total value of food needed: <%= number_to_currency(@total)%></p>
+  </div>
+
+  <table class="table w-50"">
+    <% if @recipe.recipe_foods.any? %>
+      <tr>
+        <th>Food</th>
+        <th>Quantity</th>
+        <th>Price</th>
+      </tr>
+    <% end %>
+      <% @recipe.recipe_foods.each do |food| %>
+        <tr>
+          <td><%= food.food.name%></td>
+          <td><%= food.quantity%> <%= food.food.measurement_unit%></td>
+          <td><%= number_to_currency(food.food.price*food.quantity)%></td>
+        </tr>
+      <% end %>
+  </table>
+
+    <button class = "btn">
+  <%= link_to 'Back to my recipe', user_recipe_path(current_user, @recipe), class: "btn btn-primary" %>
+  </button>
+</div>
